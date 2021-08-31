@@ -24,7 +24,7 @@ export default function DonationCard(props: DonationCardType) {
           userId: props.userId,
         },
       },
-      "/donationForm"
+      "/DonationForm"
     );
   };
 
