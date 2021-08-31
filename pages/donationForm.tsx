@@ -19,7 +19,7 @@ import {
   createDonations,
   getDonationByUserId,
   removeDonations,
-} from "./../src/graphql/queries";
+} from "../src/graphql/queries";
 
 import { useRouter } from "next/router";
 
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function donationForm() {
+function DonationForm() {
   const classes = useStyles();
   const { handleSubmit, errors: fieldsErrors, control } = useForm<Inputs>();
   const router = useRouter();
@@ -211,4 +211,4 @@ const FormCloseButton = styled.div`
   align-self: right;
 `;
 
-export default donationForm;
+export default DonationForm;

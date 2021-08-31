@@ -15,7 +15,7 @@ export default function DonationCard(props: DonationCardType) {
   const updateDonation = () => {
     router.push(
       {
-        pathname: "/donationForm",
+        pathname: "/DonationForm",
         query: {
           formType: "UPDATE",
           id: props.id,
