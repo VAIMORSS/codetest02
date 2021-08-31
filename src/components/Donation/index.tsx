@@ -1,18 +1,30 @@
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { getDonationByUserId } from "../../graphql/queries";
-import { donationType, FORM_TYPE } from "../../types";
+import { donationType } from "../../types";
 import DonationCard from "./DonationCard";
-import DonationForm from "./DonationForm";
+import { useRouter } from "next/router";
+import AddIcon from "@material-ui/icons/Add";
+import { IconButton } from "@material-ui/core";
+import styled from "styled-components";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import React from "react";
 
 interface DonationsType {
   userId: string;
 }
 
 export default function Donations(props: DonationsType) {
-  const { data, loading, error } = useQuery(getDonationByUserId(props.userId));
+  const { data, loading, error, refetch } = useQuery(
+    getDonationByUserId(props.userId)
+  );
+  const router = useRouter();
+
+  React.useEffect(() => {
+    refetch();
+  }, [data]);
 
   if (loading) {
-    return <h2>Loading...</h2>;
+    return <CircularProgress />;
   }
 
   if (error) {
@@ -22,17 +34,38 @@ export default function Donations(props: DonationsType) {
 
   const donations: donationType[] = data.getDonationByUserId;
 
+  const onAddClick = () => {
+    router.push(
+      {
+        pathname: "/donationForm",
+        query: {
+          formType: "ADD",
+          userId: props.userId,
+        },
+      },
+      "/donationForm"
+    );
+  };
+
   return (
-    <div>
+    <DonationsWrapper>
       {donations.map((donation: donationType) => (
         <DonationCard
           key={donation.id}
           id={donation.id}
           amount={donation.amount}
           tip={donation.tip}
+          userId={donation.userId}
         />
       ))}
-      <DonationForm formType={FORM_TYPE.ADD} userId={props.userId} />
-    </div>
+      <IconButton onClick={onAddClick}>
+        <AddIcon />
+      </IconButton>
+    </DonationsWrapper>
   );
 }
+
+const DonationsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;

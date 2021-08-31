@@ -8,8 +8,8 @@ export function getDonationByUserId() {
     return ({ type: GET_DONATIONS_BY_ID });
 }
 
-export function getUsers() {
-    return ({ type: GET_USERS });
+export function getUsers(payload: any) {
+    return ({ type: GET_USERS, payload: payload });
 }
 
 export function removeDonation() {

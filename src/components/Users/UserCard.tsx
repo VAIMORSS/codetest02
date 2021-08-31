@@ -55,6 +55,7 @@ export default function UserCard(props: UserCardType) {
   const handleExpandClick = () => {
     setExpanded((prev) => !prev);
   };
+
   return (
     <Card className={classes.root}>
       <CardHeader

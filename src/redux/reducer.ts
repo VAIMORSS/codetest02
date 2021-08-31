@@ -4,7 +4,7 @@ import { initialState } from "./store";
 export function reducer(state = initialState, action: any) {
     switch (action.type) {
         case GET_USERS:
-            return state;
+            return { ...state, users: action.payload };
         case GET_DONATIONS_BY_ID:
             return state;
         case REMOVE_DONATION:

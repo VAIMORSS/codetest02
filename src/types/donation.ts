@@ -20,4 +20,5 @@ export interface DonationCardType {
     id: string;
     amount: number;
     tip: number;
+    userId: string;
 }

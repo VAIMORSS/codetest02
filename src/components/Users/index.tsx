@@ -11,12 +11,7 @@ import { Grid } from "@material-ui/core";
 import { useQuery } from "@apollo/client";
 import { getUsers } from "../../graphql/queries";
 
-/**redux */
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { getUsers as getUsersAction } from "../../redux";
-
-function Users() {
+function Users(props: any) {
   const { data, loading, error } = useQuery(getUsers);
 
   if (loading) {
@@ -39,19 +34,4 @@ function Users() {
   );
 }
 
-function mapStateToProps(state: any) {
-  return {
-    count: state.counter.count,
-  };
-}
-
-function mapDispatchToProps(dispatch: any) {
-  return bindActionCreators(
-    {
-      getUsers: getUsers,
-    },
-    dispatch
-  );
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Users);
+export default Users;

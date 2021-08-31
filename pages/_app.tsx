@@ -8,11 +8,9 @@ import { reducer } from "../src/redux";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Provider store={createStore(reducer)}>
-      <ApolloProvider client={client}>
-        <Component {...pageProps} />
-      </ApolloProvider>
-    </Provider>
+    <ApolloProvider client={client}>
+      <Component {...pageProps} />
+    </ApolloProvider>
   );
 }
 export default MyApp;

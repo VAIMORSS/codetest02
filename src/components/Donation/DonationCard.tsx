@@ -5,36 +5,27 @@ import styled from "styled-components";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import EditIcon from "@material-ui/icons/Edit";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import IconButton from "@material-ui/core/IconButton";
-import { FORM_TYPE, DonationCardType } from "../../types";
-import DonationForm from "./DonationForm";
-import { useMutation } from "@apollo/client";
-import { removeDonations } from "../../graphql/queries";
-import { CircularProgress } from "@material-ui/core";
+import { DonationCardType } from "../../types";
+import { useRouter } from "next/router";
 
 export default function DonationCard(props: DonationCardType) {
-  const [isFormOpen, setIsFormOpenModal] = React.useState(false);
-  const [
-    removeDonation,
-    {
-      data: removeDonationData,
-      loading: removeDonationLoading,
-      error: removeDonationError,
-    },
-  ]: any = useMutation<{ id: string }>(removeDonations);
+  const router = useRouter();
 
   const updateDonation = () => {
-    setIsFormOpenModal(true);
-  };
-
-  const onRemoveDonation = () => {
-    removeDonation({ variables: { id: props.id } });
-  };
-
-  const closeModal = () => {
-    console.log("this is getting called");
-    setIsFormOpenModal(false);
+    router.push(
+      {
+        pathname: "/donationForm",
+        query: {
+          formType: "UPDATE",
+          id: props.id,
+          amount: props.amount,
+          tip: props.tip,
+          userId: props.userId,
+        },
+      },
+      "/donationForm"
+    );
   };
 
   return (
@@ -49,20 +40,8 @@ export default function DonationCard(props: DonationCardType) {
           <IconButton onClick={updateDonation}>
             <EditIcon />
           </IconButton>
-          {(removeDonationLoading && <CircularProgress />) || (
-            <IconButton onClick={onRemoveDonation}>
-              <DeleteForeverIcon />
-            </IconButton>
-          )}
         </DonationCurd>
       </DonationCardRows>
-      {isFormOpen && (
-        <DonationForm
-          handleClose={closeModal}
-          formType={FORM_TYPE.UPDATE}
-          donationData={props}
-        />
-      )}
     </CardContent>
   );
 }
